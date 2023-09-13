@@ -1,0 +1,12 @@
+# frozen_string_literal = true
+
+# RBS type definitions for company.rb
+
+class Company
+  @id: Integer
+  @name: String
+  @top_up: Integer
+  @email_status: bool
+
+  def initialize: (Integer id, String name, Integer top_up, bool email_status) -> void
+end
