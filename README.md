@@ -7,7 +7,8 @@ creates an `output.txt` file indicating old a new token balance and email activi
 for each user in each company.
 
 ## Requirements
-* Ruby v3.x.x
+* Ruby v3.0
+  * config.rb uses endless functions
 * Bundler vx.x.x
 
 ## Installation
