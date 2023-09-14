@@ -24,3 +24,21 @@ git clone https://github.com/rickgladwin/thrive_challenge.git
 bundle install
 ```
 
+## Notes and choices
+### code style
+* rubocop flags long method names. But I prefer descriptive method names that are a little
+bit long to shorter, ambiguous names, especially as a project grows.
+* column alignment of variable declarations etc. – I find this makes the code more readable,
+but this is the kind of style choice that is best agreed upon by a team and set in a style checker.
+
+### dynamic typing + rbs typing
+For a small project like this, type declarations may be overkill, but I added them for a couple reasons:
+* It was mentioned in the project brief that there could be bad data in the json files. Explicit validation
+will address this, but I hold to the idea that we should catch errors as early as possible in a process, and
+type declarations are one more way to catch errors earlier, including at development time.
+* While an obsession with type safety can be inefficient for development in a dynamically typed language
+like Ruby, I find a bit of type definition adds clarity and structure.
+* Depending on the Ruby version and runtime details of the system on which the code is
+running, making use of type declarations can make code perform better, especially since
+Ruby 3.3.0 is expected to have a JIT compiler.
+* RBS is neat.
