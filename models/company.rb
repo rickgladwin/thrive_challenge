@@ -14,7 +14,7 @@ class Company
     users_file = File.read('../data/users.json')
     users_data = JSON.parse(users_file)
     users_data.each { |user_data|
-      continue if user_data['company_id'] != @id
+      next if user_data['company_id'] != @id
       new_user = User.new(
         user_data['id'],
         user_data['first_name'],
@@ -36,7 +36,7 @@ class Company
     users_file = File.read('../data/users.json')
     users_data = JSON.parse(users_file)
     users_data.each { |user_data|
-      continue if user_data['company_id'] != @id or user_data['active_status'] == false
+      next if user_data['company_id'] != @id or user_data['active_status'] == false
       new_user = User.new(
         user_data['id'],
         user_data['first_name'],
