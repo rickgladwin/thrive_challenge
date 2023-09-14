@@ -1,0 +1,4 @@
+# global configuration
+
+# Email defaults
+default_from_email: 'info@example.com'
