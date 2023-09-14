@@ -9,4 +9,6 @@ class Company
   @email_status: bool
 
   def initialize: (Integer id, String name, Integer top_up, bool email_status) -> void
+  def users: () -> Array[User]
+  def active_users: () -> Array[User]
 end
