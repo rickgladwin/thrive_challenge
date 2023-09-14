@@ -29,6 +29,8 @@ class Company
       )
       all_users << new_user
     }
+    # order users by last name
+    all_users.sort! { |a, b| a.last_name <=> b.last_name }
     all_users
   end
 
@@ -51,6 +53,8 @@ class Company
       )
       active_users << new_user
     }
+    # order users by last name
+    active_users.sort! { |a, b| a.last_name <=> b.last_name }
     active_users
   end
 end
