@@ -1,0 +1,16 @@
+# frozen_string_literal = true
+
+# RBS type definitions for user.rb
+
+class User
+  @id: Integer
+  @first_name: String
+  @last_name: String
+  @email: String
+  @company_id: Integer
+  @email_status: bool
+  @active_status: bool
+  @tokens: Integer
+
+  def initialize: (Integer id, String first_name, String last_name, String email, Integer company_id, bool email_status, bool active_status, Integer tokens) -> void
+end
