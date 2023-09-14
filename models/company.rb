@@ -2,15 +2,15 @@
 
 class Company
   def initialize(id, name, top_up, email_status)
-    @id = id
-    @name = name
-    @top_up = top_up
+    @id           = id
+    @name         = name
+    @top_up       = top_up
     @email_status = email_status
   end
 
   def users
     # retrieve all users with this company_id
-    all_users = []
+    all_users  = []
     users_file = File.read('../data/users.json')
     users_data = JSON.parse(users_file)
     users_data.each { |user_data|
@@ -33,8 +33,8 @@ class Company
   def active_users
     # retrieve all active users with this company_id
     active_users = []
-    users_file = File.read('../data/users.json')
-    users_data = JSON.parse(users_file)
+    users_file   = File.read('../data/users.json')
+    users_data   = JSON.parse(users_file)
     users_data.each { |user_data|
       next if user_data['company_id'] != @id or user_data['active_status'] == false
       new_user = User.new(
