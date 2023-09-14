@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require_relative 'User'
+require 'json'
 
 class Company
   def initialize(id, name, top_up, email_status)
@@ -11,7 +13,7 @@ class Company
   def users
     # retrieve all users with this company_id
     all_users  = []
-    users_file = File.read('../data/users.json')
+    users_file = File.read(File.expand_path('../data/users.json', File.dirname(__FILE__)))
     users_data = JSON.parse(users_file)
     users_data.each { |user_data|
       next if user_data['company_id'] != @id
@@ -33,7 +35,7 @@ class Company
   def active_users
     # retrieve all active users with this company_id
     active_users = []
-    users_file   = File.read('../data/users.json')
+    users_file   = File.read(File.expand_path('../data/users.json', File.dirname(__FILE__)))
     users_data   = JSON.parse(users_file)
     users_data.each { |user_data|
       next if user_data['company_id'] != @id or user_data['active_status'] == false
@@ -51,4 +53,14 @@ class Company
     }
     active_users
   end
+end
+
+if __FILE__ == $0
+  test_company              = Company.new(1, "Test Corp", 12, true)
+  test_company_active_users = test_company.active_users
+  test_company_users        = test_company.users
+  puts "test_company_active_users: #{test_company_active_users}"
+  puts "size: #{test_company_active_users.size}"
+  puts "test_company_users: #{test_company_users}"
+  puts "size: #{test_company_users.size}"
 end
