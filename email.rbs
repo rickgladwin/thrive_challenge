@@ -1,7 +1,0 @@
-# RBS type definitions for email.rb
-
-module Email
-  def self.compose_token_update_email: (User target_user, Integer old_token_count, Integer new_token_count) -> Hash[Symbol, String]
-
-  def self.send: (Hash[Symbol, String]) -> void
-end
