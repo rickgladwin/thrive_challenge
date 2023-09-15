@@ -118,20 +118,21 @@ if __FILE__ == $0
   raise "failed to add company report to batch" unless test_report_batch.company_updates.length == 1 and test_report_batch.company_updates[0].company_id == test_company.id
 
   # generates batch report text
-  known_good_batch_report_text = "Company Id: 1
-Company Name: Test Inc.
-Users Emailed:
-	Testerton, Testy, test@example.com
-	  Previous Token Balance, 45
-	  New Token Balance 57
-Users Not Emailed:
-	McTest, Testo, test2@example.com
-	  Previous Token Balance, 34
-	  New Token Balance 46
-	Total amount of top ups for Test Inc.: 24
+  known_good_batch_report_text = "
+\tCompany Id: 1
+\tCompany Name: Test Inc.
+\tUsers Emailed:
+\t	Testerton, Testy, test@example.com
+\t	  Previous Token Balance, 45
+\t	  New Token Balance 57
+\tUsers Not Emailed:
+\t	McTest, Testo, test2@example.com
+\t	  Previous Token Balance, 34
+\t	  New Token Balance 46
+\t	Total amount of top ups for Test Inc.: 24
 
 "
-  batch_text                   = test_report_batch.to_text
+  batch_text = test_report_batch.to_text
   # print("batch_text: \n#{batch_text.string}")
   # print("known_good_batch_report_text: \n#{known_good_batch_report_text}")
   raise "failed to generate batch report text" unless batch_text.string == known_good_batch_report_text
@@ -141,4 +142,6 @@ Users Not Emailed:
   raise "failed to create output file" unless File.exist? 'output/output_test.txt'
   # cleanup
   File.delete('output/output_test.txt')
+
+  puts "unit tests passed."
 end
