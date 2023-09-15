@@ -90,3 +90,7 @@ would make the code more reusable, more modular, and easier to refactor.
 * I like validators to return a tuple or similar object, holding a boolean and a message.
 The `Company.validate_user_data` method currently returns a boolean only, making debugging
 harder.
+* Since there is a restriction on the Ruby version (3.0.0 and above), due to the use of
+endless functions, I could add a section to `challenge.rb` that will check the ruby version,
+or check that endless functions are supported in the current Ruby environment. In a larger project,
+enforcing such a restriction can be handled in the Gemfile.
