@@ -37,21 +37,21 @@ module Reports
 
     def to_text
       text = StringIO.new
-      text << "Company Id: #{@company_id}\n"
-      text << "Company Name: #{@company_name}\n"
-      text << "Users Emailed:\n"
+      text << "\tCompany Id: #{@company_id}\n"
+      text << "\tCompany Name: #{@company_name}\n"
+      text << "\tUsers Emailed:\n"
       @users_emailed.each do |user|
-        text << "\t#{user[:user_info]}\n"
-        text << "\t  Previous Token Balance, #{user[:previous_token_balance]}\n"
-        text << "\t  New Token Balance #{user[:new_token_balance]}\n"
+        text << "\t\t#{user[:user_info]}\n"
+        text << "\t\t  Previous Token Balance, #{user[:previous_token_balance]}\n"
+        text << "\t\t  New Token Balance #{user[:new_token_balance]}\n"
       end
-      text << "Users Not Emailed:\n"
+      text << "\tUsers Not Emailed:\n"
       @users_not_emailed.each do |user|
-        text << "\t#{user[:user_info]}\n"
-        text << "\t  Previous Token Balance, #{user[:previous_token_balance]}\n"
-        text << "\t  New Token Balance #{user[:new_token_balance]}\n"
+        text << "\t\t#{user[:user_info]}\n"
+        text << "\t\t  Previous Token Balance, #{user[:previous_token_balance]}\n"
+        text << "\t\t  New Token Balance #{user[:new_token_balance]}\n"
       end
-      text << "\tTotal amount of top ups for #{@company_name}: #{@total_topups}\n"
+      text << "\t\tTotal amount of top ups for #{@company_name}: #{@total_topups}\n"
       text << "\n"
     end
   end
@@ -69,6 +69,7 @@ module Reports
 
     def to_text
       text = StringIO.new
+      text << "\n"
       @company_updates.each do |company_update|
         text << company_update.to_text.string
       end

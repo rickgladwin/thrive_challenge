@@ -30,12 +30,17 @@ all_companies.each do |company|
   end
 
   #   add company report element to batch report
-  token_update_report_batch.add(company_report)
+  if company_report.total_topups > 0
+    token_update_report_batch.add(company_report)
+  end
 end
 
 puts("batch_report: #{token_update_report_batch.company_updates}")
+
+token_update_report_batch.generate_output_file(filename: 'output.txt')
 
 # present batch report (as output.txt)
 # TODO: generate text from batch report
 # TODO: create report output file
 # TODO: add error handling
+# TODO: final spec details from challenge.txt
