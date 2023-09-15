@@ -12,12 +12,18 @@ module Reports
     def initialize: (Company company) -> void
 
     def add_user: (User user, bool user_emailed, Integer old_token_balance, Integer new_token_balance) -> void
+
+    def to_text: -> StringIO
   end
 
   class BatchCompanyUsersTokenUpdate
     attr_accessor company_updates: Array[CompanyUsersTokenUpdate]
 
     def add: (CompanyUsersTokenUpdate company_report) -> void
+
+    def generate_output_file: -> void
+
+    def to_text: -> StringIO
   end
 
 end
