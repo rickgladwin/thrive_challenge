@@ -1,0 +1,18 @@
+# frozen_string_literal = true
+
+# RBS type definitions for company.rb
+
+class Company
+  def self.all: -> Array[Company]
+
+  attr_reader id: Integer
+  attr_reader name: String
+  attr_reader top_up: Integer
+  attr_reader email_status: bool
+
+  def initialize: (Integer id, String name, Integer top_up, bool email_status) -> void
+
+  def users: () -> Array[User]
+
+  def active_users: () -> Array[User]
+end
