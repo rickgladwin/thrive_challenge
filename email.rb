@@ -30,6 +30,10 @@ Congratulations!"
 end
 
 if __FILE__ == $0
+  require_relative 'config'
+  exit unless Config.run_file_level_unit_tests
+
+  # basic tests
   test_user = User.new(id: 1, first_name: 'Test', last_name: 'Testerton', email: 'test@testurl.com', company_id: 2, email_status: true, active_status: true, tokens: 67)
   puts test_user.email
   test_email_content = Email.compose_token_update_email(test_user, test_user.tokens, test_user.tokens + 10)

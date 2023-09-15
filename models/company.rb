@@ -158,6 +158,10 @@ class Company
 end
 
 if __FILE__ == $0
+  require_relative '../config'
+  exit unless Config.run_file_level_unit_tests
+
+  # basic tests
   test_company              = Company.new(id: 1, name: "Test Corp", top_up: 12, email_status: true)
   test_company_active_users = test_company.active_users
   test_company_users        = test_company.users
