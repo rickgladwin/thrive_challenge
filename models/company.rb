@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require_relative 'user'
 require 'json'
+require_relative 'user'
 
 class Company
   attr_reader :id
@@ -28,9 +28,7 @@ class Company
       )
       all_companies << new_company
     end
-    # puts "all_companies: #{all_companies}"
     # order companies by id
-    # TODO: handle empty array case
     all_companies.sort_by! { |company| company.id }
     all_companies
   end
@@ -65,7 +63,7 @@ class Company
     users_file   = File.read(File.expand_path('../data/users.json', File.dirname(__FILE__)))
     users_data   = JSON.parse(users_file)
     users_data.each do |user_data|
-      next if user_data['company_id'] != @id or user_data['active_status'] == false
+      next if user_data['company_id'] != @id or user_data['active_status'] != true
       new_user = User.new(
         id:            user_data['id'],
         first_name:    user_data['first_name'],
