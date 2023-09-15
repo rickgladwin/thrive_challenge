@@ -87,3 +87,6 @@ left in place, or can be deleted before deployment to production.
   (using `File` and `json` directly). This works fine for static code, but abstracting
 the data retrieval and/or adding a facade or wrapper around the data read functionality
 would make the code more reusable, more modular, and easier to refactor.
+* I like validators to return a tuple or similar object, holding a boolean and a message.
+The `Company.validate_user_data` method currently returns a boolean only, making debugging
+harder.
