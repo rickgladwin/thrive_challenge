@@ -5,6 +5,8 @@
 class Company
   def self.all: -> Array[Company]
 
+  def self.validate_company_data: -> bool
+
   attr_reader id: Integer
   attr_reader name: String
   attr_reader top_up: Integer
@@ -15,4 +17,6 @@ class Company
   def users: () -> Array[User]
 
   def active_users: () -> Array[User]
+
+  def validate_user_data: -> bool
 end

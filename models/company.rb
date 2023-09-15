@@ -16,10 +16,18 @@ class Company
   end
 
   def self.all
-    all_companies  = []
-    companies_file = File.read(File.expand_path('../data/companies.json', File.dirname(__FILE__)))
-    companies_data = JSON.parse(companies_file)
+
+    all_companies           = []
+    companies_data_filepath = '../data/companies.json'
+    companies_file          = File.read(File.expand_path(companies_data_filepath, File.dirname(__FILE__)))
+    begin
+      companies_data = JSON.parse(companies_file)
+    rescue JSON::ParserError => e
+      raise "Error while parsing #{companies_data_filepath}. Check the file for valid json format. Error: #{e}"
+    end
+
     companies_data.each do |company_data|
+      raise "Invalid company data: #{company_data}" unless validate_company_data(company_data)
       new_company = Company.new(
         id:           company_data['id'],
         name:         company_data['name'],
@@ -35,9 +43,15 @@ class Company
 
   def users
     # retrieve all users with this company_id
-    all_users  = []
-    users_file = File.read(File.expand_path('../data/users.json', File.dirname(__FILE__)))
-    users_data = JSON.parse(users_file)
+    all_users           = []
+    users_data_filepath = '../data/users.json'
+    users_file          = File.read(File.expand_path(users_data_filepath, File.dirname(__FILE__)))
+    begin
+      users_data = JSON.parse(users_file)
+    rescue JSON::ParserError => e
+      raise "Error while parsing #{users_data_filepath}. Check the file for valid json format. Error: #{e}"
+    end
+    # users_data = JSON.parse(users_file)
     users_data.each do |user_data|
       next if user_data['company_id'] != @id
       new_user = User.new(
@@ -59,10 +73,17 @@ class Company
 
   def active_users
     # retrieve all active users with this company_id
-    active_users = []
-    users_file   = File.read(File.expand_path('../data/users.json', File.dirname(__FILE__)))
-    users_data   = JSON.parse(users_file)
+    active_users        = []
+    users_data_filepath = '../data/users.json'
+    users_file          = File.read(File.expand_path(users_data_filepath, File.dirname(__FILE__)))
+    begin
+      users_data = JSON.parse(users_file)
+    rescue JSON::ParserError => e
+      raise "Error while parsing #{users_data_filepath}. Check the file for valid json format. Error: #{e}"
+    end
+
     users_data.each do |user_data|
+      raise "Invalid user data: #{user_data}" unless validate_user_data(user_data)
       next if user_data['company_id'] != @id or user_data['active_status'] != true
       new_user = User.new(
         id:            user_data['id'],
@@ -80,6 +101,60 @@ class Company
     active_users.sort! { |a, b| a.last_name <=> b.last_name }
     active_users
   end
+
+  def self.validate_company_data(company_data)
+    # expect a hash with all values required and correctly typed
+    return false unless company_data.is_a?(Hash)
+    expected_keys_and_types = {
+      "id":            Integer,
+      "name":    String,
+      "top_up":     Integer,
+      "email_status":         'bool',
+    }
+    return false unless company_data.length == expected_keys_and_types.length
+    expected_keys_and_types.each do |expected_key, expected_value|
+      # puts("key: #{company_data.keys}")
+      # puts("key: #{expected_key}")
+      return false unless company_data.key?(expected_key.to_s)
+      if expected_keys_and_types[expected_key] == 'bool'
+        return false unless [true, false].include? company_data[expected_key.to_s]
+      else
+        # puts "company_data class: #{company_data[expected_key.to_s].class}"
+        # puts "expected_value: #{expected_value}"
+        return false unless company_data[expected_key.to_s].class == expected_value
+      end
+    end
+    true
+  end
+
+  def validate_user_data(user_data)
+    # expect a hash with all values required and correctly typed
+    return false unless user_data.is_a?(Hash)
+    expected_keys_and_types = {
+      "id":            Integer,
+      "first_name":    String,
+      "last_name":     String,
+      "email":         String,
+      "company_id":    Integer,
+      "email_status":  'bool',
+      "active_status": 'bool',
+      "tokens":        Integer,
+    }
+    return false unless user_data.length == expected_keys_and_types.length
+    expected_keys_and_types.each do |expected_key, expected_value|
+      # puts("key: #{user_data.keys}")
+      # puts("key: #{expected_key}")
+      return false unless user_data.key?(expected_key.to_s)
+      if expected_keys_and_types[expected_key] == 'bool'
+        return false unless [true, false].include? user_data[expected_key.to_s]
+      else
+        # puts "user_data class: #{user_data[expected_key.to_s].class}"
+        # puts "expected_value: #{expected_value}"
+        return false unless user_data[expected_key.to_s].class == expected_value
+      end
+    end
+    true
+  end
 end
 
 if __FILE__ == $0
@@ -93,4 +168,19 @@ if __FILE__ == $0
 
   all_companies = Company.all
   puts "all companies: #{all_companies}"
+
+  # validates valid user data hash
+  test_user_data =
+    {
+      "id"            => 1,
+      "first_name"    => "Tanya",
+      "last_name"     => "Nichols",
+      "email"         => "tanya.nichols@test.com",
+      "company_id"    => 1,
+      "email_status"  => true,
+      "active_status" => false,
+      "tokens"        => 23,
+    }
+  raise "failed to validate valid user data" unless test_company.validate_user_data(test_user_data)
+
 end
