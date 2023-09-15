@@ -2,8 +2,9 @@
 Coding challenge solution for Thrive
 
 ## Description
-This system reads data from a `companies.json` file and a `users.json` file,
-creates an `output.txt` file indicating old and new token balance and email activity
+This system: 
+* reads data from a `companies.json` file and a `users.json` file
+* creates an `output.txt` file indicating old and new token balance and email activity
 for each user in each company.
 
 ## Requirements
@@ -18,10 +19,23 @@ to add additional accounts as collaborators._
 ```bash
 git clone https://github.com/rickgladwin/thrive_challenge.git
 ```
-  * install dependencies
-```bash
-bundle install
-```
+  * (this project has no non-core dependencies, so installing gems should be unnecessary)
+
+## Run
+* from the command line:
+* cd into the project's root directory (`thrive_challenge/`)
+* `ruby challenge.rb`
+
+## Test
+Some files have a `if __FILE__ == $0` section at the end, holding basic file-level unit
+tests. The tests aren't comprehensive, but have been left in place as a tool.
+
+As an example:
+* from the command line:
+* `ruby reports.rb`
+
+If any of the unit tests fail, you'll see an exception raised on the command line.
+Otherwise, all the unit tests are passing.
 
 ## Notes and choices
 ### code style
@@ -67,3 +81,9 @@ directly from the command line AND Config.run_file_level_unit_tests is true.
 This type of unit test is generated as a natural part of writing and checking the code
 at development time, and serves as a useful tool when refactoring or debugging later if
 left in place, or can be deleted before deployment to production.
+
+### Things I would change
+* The `Company` class has methods that are coupled to the file format of the data
+  (using `File` and `json` directly). This works fine for static code, but abstracting
+the data retrieval and/or adding a facade or wrapper around the data read functionality
+would make the code more reusable, more modular, and easier to refactor.
