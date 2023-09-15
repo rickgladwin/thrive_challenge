@@ -1,0 +1,23 @@
+# RBS type definitions for reports.rb
+
+module Reports
+
+  class CompanyUsersTokenUpdate
+    attr_reader company_id: Integer
+    attr_reader company_name: String
+    attr_accessor users_emailed: Array[Hash[Symbol, String | Integer]]
+    attr_accessor users_not_emailed: Array[Hash[Symbol, String | Integer]]
+    attr_accessor total_topups: Integer
+
+    def initialize: (Company company) -> void
+
+    def add_user: (User user, bool user_emailed, Integer old_token_balance, Integer new_token_balance) -> void
+  end
+
+  class BatchCompanyUsersTokenUpdate
+    attr_accessor company_updates: Array[CompanyUsersTokenUpdate]
+
+    def add: (CompanyUsersTokenUpdate company_report) -> void
+  end
+
+end
